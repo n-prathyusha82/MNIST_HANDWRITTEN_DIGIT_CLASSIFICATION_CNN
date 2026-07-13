@@ -24,10 +24,17 @@ st.write("Draw a digit (0–9) below and click **Predict**.")
 
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model("models/mnist_cnn_model.keras")
-    return model
+    try:
+        model = tf.keras.models.load_model(
+            "models/mnist_cnn_model.keras",
+            compile=False
+        )
+        st.success("✅ Model loaded successfully")
+        return model
 
-model = load_model()
+    except Exception as e:
+        st.exception(e)
+        return None
 
 # ---------------------------------------------------
 # Drawing Canvas
